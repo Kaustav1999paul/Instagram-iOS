@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct CompleteSignupView: View {
+    
+    @EnvironmentObject var viewModel : RegistrationViewModel
+    
     var body: some View {
         VStack(spacing: 5){
             
@@ -17,7 +20,7 @@ struct CompleteSignupView: View {
                 .font(.title)
                 .fontWeight(.bold)
             
-            Text("Kaustav Paul")
+            Text(viewModel.username)
                 .font(.title)
                 .fontWeight(.bold)
             
@@ -29,7 +32,7 @@ struct CompleteSignupView: View {
                 .padding(.horizontal, 40)
             
             Button{
-                print("Complete Sign up")
+                Task{try await viewModel.createUser() }
             }label: {
                 Text("Create Account")
                     .font(.subheadline)
@@ -40,6 +43,13 @@ struct CompleteSignupView: View {
                     .cornerRadius(10)
                     .padding(.top)
             }
+            Spacer()
+            
+            Image("success")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 300, alignment: .center)
+            
             Spacer()
         }.padding()
     }
